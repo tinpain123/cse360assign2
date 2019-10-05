@@ -10,20 +10,24 @@ package cse360assign2;
 public class AddingMachine {
 
 	private int total;
+	private String historyOperator;
+	private String historyNumber;
 	
 	/**
 	 * Default constructor method with no parameter.
 	 */
 	public AddingMachine () {
-		total = 0;  // not needed - included for clarity
+		this.total = 0;  // not needed - included for clarity
+		this.historyOperator = "";
+		this.historyNumber = "";
 	}
-	
+
 	/**
 	 * Returns an int of the overall total operations done on the class.
 	 * @return the total
 	 */
 	public int getTotal () {
-		return 0;
+		return this.total;
 	}
 	
 	/**
@@ -31,29 +35,47 @@ public class AddingMachine {
 	 * @param value an integer
 	 */
 	public void add (int value) {
-		
+		this.total += value;
+		this.historyOperator += "+";
+		this.historyNumber += Integer.toString(value);
 	}
-	
+
 	/**
 	 * Arithmetic method that subtracts an integer from the total.
 	 * @param value an integer
 	 */
 	public void subtract (int value) {
-		
+		this.total -= value;
+		this.historyOperator += "-";
+		this.historyNumber += Integer.toString(value);
 	}
-	
+
 	/**
 	 * Represents the overall arithmetic operation done on the class as a String,
 	 * where '0' is the initial operand.
-	 */
+	 */	
 	public String toString () {
-		return "";
+		String returnString = "0";
+		
+		for(int traverse = 0; traverse < historyOperator.length(); traverse++)
+		{
+			if(historyOperator.charAt(traverse) == '+')
+				returnString += " + " + historyNumber.charAt(traverse);
+			else if(historyOperator.charAt(traverse) == '-')
+				returnString += " - " + historyNumber.charAt(traverse);
+			else
+				throw new IllegalArgumentException();
+		}
+		
+		return returnString;
 	}
 
 	/**
 	 * Resets the total integer to it's original state, which is zero.
 	 */
 	public void clear() {
-	
+		this.total = 0;
+		this.historyOperator = "";
+		this.historyNumber = "";
 	}
 }
